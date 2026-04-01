@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./backend/api-gateway
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT=3000
+      - FRONTEND_URL=http://localhost:3003
+      - AIRCRAFT_SERVICE_URL=http://aircraft-service:3001
+      - MAINTENANCE_SERVICE_URL=http://maintenance-service:3002
+    depends_on:
+      - aircraft-service
+      - maintenance-service
+
+  aircraft-service:
+    build: ./backend/microservices/aircraft-service
+    ports:
+      - '3001:3001'
+    environment:
+      - PORT=3001
+
+  maintenance-service:
+    build: ./backend/microservices/maintenance-service
+    ports:
+      - '3002:3002'
+    environment:
+      - PORT=3002
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '3003:3003'
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api-gateway:3000
+    depends_on:
+      - api-gateway

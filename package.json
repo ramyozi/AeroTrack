@@ -1,0 +1,18 @@
+{
+  "name": "aerotrack",
+  "version": "1.0.0",
+  "description": "Aircraft fleet maintenance tracking platform",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix backend/api-gateway && npm install --prefix backend/microservices/aircraft-service && npm install --prefix backend/microservices/maintenance-service && npm install --prefix frontend",
+    "dev": "concurrently \"npm run dev:aircraft\" \"npm run dev:maintenance\" \"npm run dev:gateway\" \"npm run dev:frontend\"",
+    "dev:gateway": "npm run start:dev --prefix backend/api-gateway",
+    "dev:aircraft": "npm run start:dev --prefix backend/microservices/aircraft-service",
+    "dev:maintenance": "npm run start:dev --prefix backend/microservices/maintenance-service",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix backend/api-gateway && npm run build --prefix backend/microservices/aircraft-service && npm run build --prefix backend/microservices/maintenance-service && npm run build --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
